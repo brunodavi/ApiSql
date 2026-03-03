@@ -1,4 +1,5 @@
 using ApiSql.Database;
+using ApiSql.Models;
 using ApiSql.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,12 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<BookContext>();
 builder.Services.AddScoped<BookRepository>();
 
+builder.Services.AddDbContext<QuizContext>();
+builder.Services.AddScoped<QuizRepository>();
+
+builder.Services.AddControllers();
+builder.Services.AddMemoryCache();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -19,6 +26,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapControllers();
 
 var summaries = new[]
 {
@@ -54,3 +62,5 @@ record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
+
+public partial class Program {}
