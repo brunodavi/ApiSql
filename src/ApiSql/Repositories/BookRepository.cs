@@ -1,9 +1,10 @@
+using ApiSql.Database;
 using ApiSql.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiSql.Repositories;
 
-public class BookRepository(DbContext context)
+public class BookRepository(BookContext context)
 {
     private readonly DbSet<Book> dbSetBook = context.Set<Book>();
 
