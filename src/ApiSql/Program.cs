@@ -1,6 +1,6 @@
 using ApiSql.Database;
-using ApiSql.Models;
 using ApiSql.Repositories;
+using ApiSql.Store;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +12,9 @@ builder.Services.AddDbContext<BookContext>();
 builder.Services.AddScoped<BookRepository>();
 
 builder.Services.AddDbContext<QuizContext>();
-builder.Services.AddScoped<QuizRepository>();
+builder.Services.AddScoped<IQuizRepository, QuizRepository>();
+
+builder.Services.AddScoped<QuizCachesStore>();
 
 builder.Services.AddControllers();
 builder.Services.AddMemoryCache();
