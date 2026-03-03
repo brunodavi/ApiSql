@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApiSql.Tests.Database;
 
-public class QuizTestContext : QuizContext
+public class QuizTestContext(DbContextOptions<QuizContext> options) : QuizContext(options)
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
