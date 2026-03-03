@@ -1,13 +1,12 @@
+using ApiSql.Database;
 using ApiSql.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ApiSql.Tests.Database;
 
-public class BookTestContext : DbContext
+public class BookTestContext : BookContext
 {
-    public virtual DbSet<Book>? Books { get; set; }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var serviceProvider = new ServiceCollection()
