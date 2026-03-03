@@ -10,7 +10,7 @@ public class QuizTestRepository
     public void ShouldCreateQuiz()
     {
         // Arrange
-        using var context = new QuizTestContext();
+        using var context = new QuizTestContext(new());
 
         List<Question> questions = [
             new()
