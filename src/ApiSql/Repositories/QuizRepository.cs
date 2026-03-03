@@ -1,16 +1,19 @@
 using ApiSql.Database;
 using ApiSql.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace ApiSql.Repositories;
 
-public class QuizRepository(QuizContext context, IMemoryCache memoryCache)
+public interface IQuizRepository
 {
-    private readonly DbSet<Quiz> dbSetQuiz = context.Set<Quiz>();
-    private QuizCacheStore QuizCacheStore => new(memoryCache, this);
+    Quiz? GetQuiz(int quizId);
+    List<Quiz> GetQuizzes();
+}
 
-    public Quiz? GetQuiz(int quizId) => QuizCacheStore.Get(quizId);
+public class QuizRepository(QuizContext context) : IQuizRepository
+{
+    private readonly DbSet<Quiz> quizzes = context.Quizzes;
 
-    public List<Quiz> GetQuizzes() => dbSetQuiz.ToList();
+    public virtual Quiz? GetQuiz(int quizId) => quizzes.FirstOrDefault(quiz => quiz.QuizId == quizId);
+    public virtual List<Quiz> GetQuizzes() => quizzes.ToList();
 }
